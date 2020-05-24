@@ -93,13 +93,15 @@ My German Anki cards
     const card = document.getElementById('card');
     const listeningTemplate = document.getElementById('listening');
     const recallTemplate = document.getElementById('recall');
-    const word = document.getElementById('word');
 
     if ("{{Tags}}".match(/new/i)) {
         card.innerHTML = recallTemplate.innerHTML;
     } else {
         card.innerHTML = recallTemplate.innerHTML;
     }
+
+    const word = document.getElementById('word');
+
 
     if ("{{word}}".match(/der/i)) {
         word.classList.add('der');
