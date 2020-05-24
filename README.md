@@ -24,7 +24,7 @@ My German Anki cards
     const recallTemplate = document.getElementById('recall');
 
     if ("{{Tags}}".match(/new/i)) {
-        card.innerHTML = recallTemplate.innerHTML;
+        card.innerHTML = listeningTemplate.innerHTML;
     } else {
         card.innerHTML = recallTemplate.innerHTML;
     }
@@ -66,7 +66,7 @@ My German Anki cards
 ```html
 <template id="listening">
     <p>{{picture}}</p>
-    <h1 class="word">{{word}}</h1>
+    <h1 id="word">{{word}}</h1>
     <p>{{word forms}}</p>
     <p>{{example sentence}}</p>
     <hr />
@@ -95,22 +95,23 @@ My German Anki cards
     const recallTemplate = document.getElementById('recall');
 
     if ("{{Tags}}".match(/new/i)) {
-        card.innerHTML = recallTemplate.innerHTML;
+        card.innerHTML = listeningTemplate.innerHTML;
     } else {
         card.innerHTML = recallTemplate.innerHTML;
     }
 
     const word = document.getElementById('word');
 
-
-    if ("{{word}}".match(/der/i)) {
-        word.classList.add('der');
-    }
-    if ("{{word}}".match(/die/i)) {
-        word.classList.add('die');
-    }
-    if ("{{word}}".match(/das/i)) {
-        word.classList.add('das');
+    if (word) {
+        if ("{{word}}".match(/der/i)) {
+            word.classList.add('der');
+        }
+        if ("{{word}}".match(/die/i)) {
+            word.classList.add('die');
+        }
+        if ("{{word}}".match(/das/i)) {
+            word.classList.add('das');
+        }
     }
 </script>
 ```
