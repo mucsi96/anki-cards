@@ -23,7 +23,7 @@ My German Anki cards
     const listeningTemplate = document.getElementById('listening');
     const recallTemplate = document.getElementById('recall');
 
-    if ("{{Tags}}".match(/new/i)) {
+    if ("{{Tags}}".split(' ').includes('new')) {
         card.innerHTML = listeningTemplate.innerHTML;
     } else {
         card.innerHTML = recallTemplate.innerHTML;
@@ -94,7 +94,7 @@ My German Anki cards
     const listeningTemplate = document.getElementById('listening');
     const recallTemplate = document.getElementById('recall');
 
-    if ("{{Tags}}".match(/new/i)) {
+    if ("{{Tags}}".split(' ').includes('new')) {
         card.innerHTML = listeningTemplate.innerHTML;
     } else {
         card.innerHTML = recallTemplate.innerHTML;
