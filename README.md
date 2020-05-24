@@ -16,14 +16,17 @@ My German Anki cards
     <p>{{translated example sentence}}</p>
 </template>
 
+<div id="card"></div>
+
 <script>
+    const card = document.getElementById('card');
     const listeningTemplate = document.getElementById('listening');
     const recallTemplate = document.getElementById('recall');
 
     if ("{{Tags}}".match(/new/i)) {
-        document.body.appendChild(listeningTemplate.content.cloneNode(true));
+        card.innerHTML = recallTemplate.innerHTML;
     } else {
-        document.body.appendChild(recallTemplate.content.cloneNode(true));
+        card.innerHTML = recallTemplate.innerHTML;
     }
 </script>
 ```
@@ -72,34 +75,40 @@ My German Anki cards
 </template>
 
 <template id="recall">
-    {{FrontSide}}
-
+    <p>{{type}}</p>
+    <p>{{picture}}</p>
+    <h1>{{translation}}</h1>
+    <p>{{translated example sentence}}</p>
     <hr>
-    <h1 class="word"> {{word}}</h1>
+    <h1 id="word"> {{word}}</h1>
     <p>{{word forms}}</p>
     <p>{{example sentence}}</p>
     {{audio}}
     {{example sentence audio}}
 </template>
 
-<script>
-    if ("{{word}}".match(/der/i)) {
-        $(".word").addClass("der");
-    }
-    if ("{{word}}".match(/die/i)) {
-        $(".word").addClass("die");
-    }
-    if ("{{word}}".match(/das/i)) {
-        $(".word").addClass("das");
-    }
+<div id="card"></div>
 
+<script>
+    const card = document.getElementById('card');
     const listeningTemplate = document.getElementById('listening');
     const recallTemplate = document.getElementById('recall');
+    const word = document.getElementById('word');
 
     if ("{{Tags}}".match(/new/i)) {
-        document.body.appendChild(listeningTemplate.content.cloneNode(true));
+        card.innerHTML = recallTemplate.innerHTML;
     } else {
-        document.body.appendChild(recallTemplate.content.cloneNode(true));
+        card.innerHTML = recallTemplate.innerHTML;
+    }
+
+    if ("{{word}}".match(/der/i)) {
+        word.classList.add('der');
+    }
+    if ("{{word}}".match(/die/i)) {
+        word.classList.add('die');
+    }
+    if ("{{word}}".match(/das/i)) {
+        word.classList.add('das');
     }
 </script>
 ```
