@@ -1,34 +1,33 @@
 # anki-cards
 My German Anki cards
 
+## Addon
+```python
+# C:\Users\mucsi\AppData\Roaming\Anki2\addons21\hello\__init__.py
+from anki.hooks import wrap
+from aqt import mw
+from aqt.main import AnkiQt
+
+def populateDue(self):
+    mw.col.db.execute("update notes set flds = (select cards.due || char(31) || substr(notes.flds, instr(notes.flds, char(31)) + 1) from cards where cards.nid = notes.id ) where exists(select 1 from cards where cards.nid = notes.id and cards.type not in (0, 1) ) and notes.mid = 1588525990364")
+
+AnkiQt.onSync = wrap(AnkiQt.onSync, populateDue, "before")
+```
+
 ## Front Template
 ```html
-<template id="listening">
+{{^due}}
     {{type}}
     {{audio}}
     {{example sentence audio}}
-</template>
+{{/due}}
 
-<template id="recall">
+{{#due}}
     <p>{{type}}</p>
     <p>{{picture}}</p>
     <h1>{{translation}}</h1>
     <p>{{translated example sentence}}</p>
-</template>
-
-<div id="card"></div>
-
-<script>
-    const card = document.getElementById('card');
-    const listeningTemplate = document.getElementById('listening');
-    const recallTemplate = document.getElementById('recall');
-
-    if ("{{Tags}}".split(' ').includes('new')) {
-        card.innerHTML = listeningTemplate.innerHTML;
-    } else {
-        card.innerHTML = recallTemplate.innerHTML;
-    }
-</script>
+{{/due}}
 ```
 
 ## Styling (shared between cards)
@@ -64,7 +63,7 @@ My German Anki cards
 
 ## Back Template
 ```html
-<template id="listening">
+{{^due}}
     <p>{{picture}}</p>
     <h1 id="word">{{word}}</h1>
     <p>{{word forms}}</p>
@@ -72,9 +71,9 @@ My German Anki cards
     <hr />
     <h1>{{translation}}</h1>
     <p>{{translated example sentence}}</p>
-</template>
+{{/due}}
 
-<template id="recall">
+{{#due}}
     <p>{{type}}</p>
     <p>{{picture}}</p>
     <h1>{{translation}}</h1>
@@ -85,21 +84,9 @@ My German Anki cards
     <p>{{example sentence}}</p>
     {{audio}}
     {{example sentence audio}}
-</template>
-
-<div id="card"></div>
+{{/due}}
 
 <script>
-    const card = document.getElementById('card');
-    const listeningTemplate = document.getElementById('listening');
-    const recallTemplate = document.getElementById('recall');
-
-    if ("{{Tags}}".split(' ').includes('new')) {
-        card.innerHTML = listeningTemplate.innerHTML;
-    } else {
-        card.innerHTML = recallTemplate.innerHTML;
-    }
-
     const word = document.getElementById('word');
 
     if (word) {
