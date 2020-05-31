@@ -5,11 +5,27 @@ My German Anki cards
 ```python
 # C:\Users\mucsi\AppData\Roaming\Anki2\addons21\hello\__init__.py
 from anki.hooks import wrap
-from aqt import mw
 from aqt.main import AnkiQt
+from anki.consts import CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING
 
 def populateDue(self):
-    mw.col.db.execute("update notes set flds = (select cards.due || char(31) || substr(notes.flds, instr(notes.flds, char(31)) + 1) from cards where cards.nid = notes.id ) where exists(select 1 from cards where cards.nid = notes.id and cards.type not in (0, 1) ) and notes.mid = 1588525990364")
+    model = self.col.models.byName("recall + listening pro")
+
+    def isDueField(field):
+        return field.get('name') == 'due'
+
+    if model:
+        mid = model.get('id')
+        flds = model.get('flds')
+        dueIndex = next(i for i,v in enumerate(flds) if isDueField(v))
+        for nid in self.col.findNotes('mid:{}'.format(mid)):
+            note = self.col.getNote(nid)
+            card = note.cards()[0]
+            if (card.type in (CARD_TYPE_NEW, CARD_TYPE_LRN)):
+                note.fields[dueIndex] = ''
+            if (card.type in (CARD_TYPE_REV, CARD_TYPE_RELEARNING)):
+                note.fields[dueIndex] = '{}'.format(card.due)
+            note.flush()
 
 AnkiQt.onSync = wrap(AnkiQt.onSync, populateDue, "before")
 ```
