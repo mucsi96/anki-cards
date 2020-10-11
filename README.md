@@ -1,6 +1,18 @@
 # anki-cards
 My German Anki cards
 
+## Node Type
+1. Type
+2. Word
+3. Translation
+4. Audio
+5. Picture
+6. Word Forms
+7. Example sentence
+8. Translated Example sentence
+9. Example sentence audio
+10 due
+
 ## Addon
 ```python
 # C:\Users\mucsi\AppData\Roaming\Anki2\addons21\hello\__init__.py
