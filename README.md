@@ -11,7 +11,7 @@ My German Anki cards
 7. Example sentence
 8. Translated Example sentence
 9. Example sentence audio
-10 due
+10. due
 
 ## Addon
 ```python
