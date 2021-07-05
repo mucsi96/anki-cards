@@ -116,15 +116,17 @@ AnkiQt.onSync = wrap(AnkiQt.onSync, populateDue, "before")
 
 <script>
     const word = document.getElementById('word');
+    const wordText = word && word.textContent;
+    const trimmedWord = wordText.trim(); 
 
     if (word) {
-        if ("{{word}}".match(/der/i)) {
+        if (trimmedWord.startsWith('der')) {
             word.classList.add('der');
         }
-        if ("{{word}}".match(/die/i)) {
+        if (trimmedWord.startsWith('die')) {
             word.classList.add('die');
         }
-        if ("{{word}}".match(/das/i)) {
+        if (trimmedWord.startsWith('das')) {
             word.classList.add('das');
         }
     }
